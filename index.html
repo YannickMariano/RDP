@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Simulateur — Remplissage automatique d'une citerne</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="title">Simulation — Citerne & commande</div>
+    <div class="tank-area">
+      <div class="tank" id="tank">
+        <div class="water" id="water">
+          <div class="bubbles">
+            <div class="bubble b1"></div>
+            <div class="bubble b2"></div>
+            <div class="bubble b3"></div>
+          </div>
+        </div>
+        <div class="sensors">
+          <div class="sensor"><div id="sensorHighDot" class="dot"></div><div class="small">Capteur HAUT</div></div>
+          <div class="sensor"><div id="sensorLowDot" class="dot"></div><div class="small">Capteur BAS</div></div>
+        </div>
+      </div>
+
+      <div class="controls panel" style="width:100%;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="small">Mode</div>
+          <div class="switch">
+            <label class="small">Auto</label>
+            <input id="modeAuto" type="checkbox"/>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:10px;">
+          <button class="btn" id="btnStart">Démarrer (Manuel)</button>
+          <button class="btn" id="btnStop">Arrêter</button>
+          <button class="btn" id="btnReset">Reset alarme</button>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div class="status-line">
+            <div class="led off" id="ledPump"></div><div class="small">Pompe</div>
+            <div style="width:12px"></div>
+            <div class="animated-arrow" id="flowArrow" style="display:none">↻</div>
+            <div style="flex:1"></div>
+            <div class="small">Niveau : <b id="lvlLabel">40%</b></div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div class="small">Hysteresis & paramètres</div>
+          <div style="display:flex;gap:8px;margin-top:6px;">
+            <label class="small">Seuil bas</label>
+            <input id="thLow" type="range" min="5" max="60" value="20" />
+            <span class="small" id="thLowVal">20%</span>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:6px;">
+            <label class="small">Seuil haut</label>
+            <input id="thHigh" type="range" min="40" max="95" value="80" />
+            <span class="small" id="thHighVal">80%</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card right">
+    <div class="title">Contrôle & supervision</div>
+
+    <div class="big-stats">
+      <div class="stat panel">
+        <div class="small">Pompe</div>
+        <div id="pumpState" style="font-size:20px;margin-top:8px">STOP</div>
+        <div class="pump-anim" id="pumpAnim" style="margin-top:10px;">
+          <div class="rotor"></div>
+        </div>
+      </div>
+
+      <div class="stat panel">
+        <div class="small">Alarmes</div>
+        <div id="alarmState" style="font-size:18px;margin-top:8px;color:#fbbf24">Aucune</div>
+        <div style="margin-top:8px;" class="small">Protection: anti-débordement et anti-marche à sec</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="small">Logs</div>
+      <div class="log" id="log"></div>
+    </div>
+
+    <div class="panel">
+      <div class="small">Simulateur manuel</div>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <button class="btn" id="raiseLvl">+ Niveau</button>
+        <button class="btn" id="lowerLvl">- Niveau</button>
+        <button class="btn" id="toggleLeak">Simuler fuite</button>
+      </div>
+      <div class="small" style="margin-top:8px">Temps accéléré pour la simulation.</div>
+    </div>
+
+  </div>
+
+  <footer>PROJET RDP, Remplissage d'eau automatique d'une citerne</footer>
+</div>
+ <script src="assets/js/script.js"></script>

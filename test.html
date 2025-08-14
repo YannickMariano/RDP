@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulation - Remplissage Automatique Citerne</title>
+<style>
+    body {
+        background: linear-gradient(to bottom, #aee1f9, #ffffff);
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .citerne {
+        width: 200px;
+        height: 400px;
+        border: 5px solid #444;
+        border-radius: 10px;
+        position: relative;
+        background-color: #e0e0e0;
+        overflow: hidden;
+    }
+
+    .eau {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: linear-gradient(to top, #00bfff, #87cefa);
+        transition: height 1s ease-in-out;
+    }
+
+    .capteur {
+        position: absolute;
+        left: -25px;
+        width: 20px;
+        height: 5px;
+        background-color: red;
+    }
+
+    .capteur.haut {
+        top: 50px;
+    }
+
+    .capteur.bas {
+        bottom: 50px;
+    }
+
+    .boutons {
+        margin-top: 20px;
+        display: flex;
+        gap: 15px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        background-color: #0077cc;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #005fa3;
+        transform: scale(1.05);
+    }
+
+    .etat {
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 18px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Simulation - Remplissage Automatique d'une Citerne</h1>
+
+<div class="citerne">
+    <div class="capteur haut"></div>
+    <div class="capteur bas"></div>
+    <div class="eau" id="eau" style="height: 30%;"></div>
+</div>
+
+<div class="boutons">
+    <button onclick="startRemplissage()">Démarrer Remplissage Auto</button>
+    <button onclick="stopRemplissage()">Arrêter</button>
+</div>
+
+<div class="etat" id="etat">État : En attente...</div>
+
+<script>
+    let hauteurEau = 30; // % initial
+    let interval = null;
+    const eau = document.getElementById("eau");
+    const etat = document.getElementById("etat");
+
+    function startRemplissage() {
+        if (interval) return; // éviter plusieurs démarrages
+        etat.textContent = "État : Remplissage en cours...";
+        interval = setInterval(() => {
+            if (hauteurEau >= 90) {
+                etat.textContent = "État : Niveau haut atteint - Pompe arrêtée.";
+                clearInterval(interval);
+                interval = null;
+            } else {
+                hauteurEau += 5;
+                eau.style.height = hauteurEau + "%";
+            }
+        }, 800);
+    }
+
+    function stopRemplissage() {
+        etat.textContent = "État : Arrêt manuel.";
+        clearInterval(interval);
+        interval = null;
+    }
+</script>
+
+</body>
+</html>
