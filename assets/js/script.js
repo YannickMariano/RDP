@@ -69,7 +69,7 @@ function controlLoop(){
       }
 
       // Vidange automatique: level >= 0
-      if(!remplissage && level < highTh + 1  && !alarm){
+      if(!remplissage && level <= highTh + 1  && !alarm){
         remplissage = false;
         level = Math.max(0, level - 1);
         log('Auto: Utilisation d\'eau détectée');
