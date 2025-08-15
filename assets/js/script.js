@@ -113,7 +113,8 @@ function controlLoop(){
   if(level >= 99){
     remplissage = false;
     alarm = 'Débordement potentiel détecté - pompe stoppée';
-    log('ALARME: débordement (niveau critique)');
+    log('ALARME: débordement (niveau critique) - Demmarage du vidange automatique');
+    level = Math.max(0, level - 1);
   }
 
   else if(level <= 5){
